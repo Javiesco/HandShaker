@@ -2,6 +2,8 @@
 
 <%@ include file="../fragments/headerMiPerfil.jspf" %> 
 
+
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -214,7 +216,20 @@ function obtenerServicios(serv) {
 	 });	 	 	 	 
  }
  
+ 
  </script>
+ <script type="text/javascript">
+	$(function() {
+		$(".X").click(
+			function() {
+				
+				if (confirm("Valoracion realizada con exito ") == true) {
+					
+					
+				}
+			});
+	})
+</script>
 
 <div id="cuerpo" class="container">
 	<c:choose>
@@ -251,10 +266,33 @@ function obtenerServicios(serv) {
 				<div class="col-md-12">
 					<h3 class="h3-perfil" align="center">Valoraci&oacute;n</h3>
 					<div class="progress">
-						<div class="progress-bar" role="progressbar" aria-valuenow="7"
-							aria-valuemin="0" aria-valuemax="10" style="width: 70%;">
-							7/10</div>
+						<div class="progress-bar" role="progressbar" aria-valuenow="${media}"
+							aria-valuemin="0" aria-valuemax="10" style="width: ${media}0%;">
+							${media}
+							</div>
 					</div>
+					
+					<div >
+					
+						<c:if test="${not (usuario.id eq usuarioPerfil.id)}">
+							<form id="formValorar" name="formValorar"
+											action="${prefix}anadirValoracion" method="post">
+								<h4>valorar a ${e:forHtmlContent(usuarioPerfil.alias)}  </h4>
+								<div >
+									<input type="hidden" id="idUsuario" name="idUsuario" value="${usuarioPerfil.id}">
+									<input id ="btn-valoracion_${usuarioPerfil.id}" name="valoracion" type="number" max="10" min ="0" value="0">
+								</div>
+								<div>
+									<button  class="X btn btn-primary" id="btn-valoracion_${usuarioPerfil.id}" name = "btn-valoracion">
+										<strong>ENVIAR</strong>
+									</button>
+									
+								</div>
+							</form>
+						</c:if>
+			
+					</div>
+					
 				</div>
 				<c:if test="${usuario.id eq usuarioPerfil.id}">
 					<div class="col-md-12" style="margin-top: 5%;" align="center">

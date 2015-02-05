@@ -219,6 +219,18 @@
 							<li ${elemNavbarActive4}><a href="${prefix}mis_ofertas"><strong>Mis
 									Ofertas</strong> <span class="badge" style="margin-left: 5px"></span>
 							</a></li>
+							<c:choose>
+								<c:when test="${not empty usuario}">
+
+									<li ${elemNavbarActive6}><a
+										href="${prefix}trending_topic/Usuario/${usuario.id}"><strong>Trending Topic Usuarios</strong></a></li>
+								</c:when>
+								<c:otherwise>
+
+									<li ${elemNavbarActive6}><a href="${prefix}trending_topic/Usuario/0"><strong>Trending Topic Usuarios
+											</strong></a></li>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</ul>

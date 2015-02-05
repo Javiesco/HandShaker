@@ -273,12 +273,32 @@ public class HomeController {
 	
 	}
 	
+	@RequestMapping(value = "/trending_topic/Usuario/{id}", method = RequestMethod.GET)
+	public String trending_topicHome(HttpServletRequest request,Model model,HttpSession session,
+			@PathVariable("id") long id){
+		System.out.print("algo");
+		if(id==0){			
+			Usuario u = null;
+		}		
+		else{
+		
+			List<Usuario> lista_usuarios = entityManager.createNamedQuery("ListaUsuarios").getResultList();
+			model.addAttribute("lista_usuarios",lista_usuarios);
+		
+		}
+			
+		
+		return "trending_topic";
+	}
+	
+	
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/mi_perfil/Usuario/{id}", method = RequestMethod.GET)
 	public String mi_perfilHome(HttpServletRequest request,Model model,HttpSession session,
-			@PathVariable("id") long idUsuarioPulsado) {
+			@PathVariable("id") long idUsuarioPulsado){
 								
 		if(idUsuarioPulsado==0){			
 			Usuario u = null;
@@ -286,7 +306,7 @@ public class HomeController {
 		else{
 		
 			Usuario u = (Usuario)entityManager.createNamedQuery("ExisteUsuarioPorID").setParameter("IDMetido", idUsuarioPulsado).getSingleResult();
-						
+			//System.out.print(valoracion);		
 			if(u!=null){			
 				model.addAttribute("usuarioPerfil", u);				
 				List<Servicio> listaServiciosUsuario= entityManager.createQuery("SELECT DISTINCT u.habilidades from Usuario u join u.habilidades h where u.id = "+ idUsuarioPulsado +"").getResultList();
@@ -298,7 +318,27 @@ public class HomeController {
 					if(listaInteresesUsuario!=null){
 						model.addAttribute("listaInteresesUsuario",listaInteresesUsuario);
 					}
+					
+					int media=0;
+					if(u.getValoracion() == null){
+						
+						u.setValoracion(new ArrayList<Integer>());
+						session.setAttribute("media", 0);
+					}else{
+						for(int i=0; i< u.getValoracion().size(); i++){
+							
+							media += u.getValoracion().get(i);
+						}
+						media = media /u.getValoracion().size();
+						session.setAttribute("media", media);
+					}
+					
+				
+	
+					
+				
 			}
+			
 		}
 		
 		List<Categoria> listaTodasCategorias = entityManager.createNamedQuery("ListaCategorias").getResultList();
@@ -333,7 +373,34 @@ public class HomeController {
 		    
 		    return IOUtils.toByteArray(in);
 		}
+	@RequestMapping(value = "/anadirValoracion", method = RequestMethod.POST)
+	@Transactional
+	public String anadirValoracionHome(Model model, HttpSession session,
+			@RequestParam("valoracion") int valoracion, @RequestParam ("idUsuario") long id_usuario){
+		session.setAttribute("media", 0);
+		Usuario u = (Usuario)entityManager.createNamedQuery("ExisteUsuarioPorID").setParameter("IDMetido", id_usuario).getSingleResult();
+		ArrayList<Integer> valoraciones = u.getValoracion();
+		if (valoraciones == null){
+			
+			valoraciones = new ArrayList<Integer>();
+		}
+		valoraciones.add(valoracion);
+		entityManager.persist(u);
+		u.setValoracion(valoraciones);
+		entityManager.merge(u);
+		
+		int media=0;
+		for(int i=0; i< u.getValoracion().size(); i++){
+			
+			media += u.getValoracion().get(i);
+		}
+		media = media /u.getValoracion().size();
 	
+		//model.addAttribute("media",media );
+		session.setAttribute("media", media);
+		
+		return "redirect:"+ "mi_perfil/Usuario/"+id_usuario;
+	}
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */

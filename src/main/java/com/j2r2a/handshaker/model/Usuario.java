@@ -26,6 +26,7 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name="ExisteUsuarioLogin",query="select u from Usuario u where u.alias = :UsuarioMetido"),
     @NamedQuery(name="ListaUsuarios",query="SELECT DISTINCT c FROM Usuario c"),
     @NamedQuery(name="ExisteUsuarioPorID",query="SELECT u FROM Usuario u WHERE u.id = :IDMetido")
+   
 })
 
 public class Usuario{
@@ -67,7 +68,7 @@ public class Usuario{
 		u.latitud=latitud;
 		u.longitud=longitud;
 		
-		u.valoracion=new ArrayList<Integer>();
+		u.valoracion= new ArrayList<Integer>();
 		u.habilidades= new ArrayList<Servicio>();
 		u.intereses=new ArrayList<Servicio>();
 		
@@ -213,7 +214,7 @@ public class Usuario{
 				+" contrasenia: " + this.contrasenia + " salt: " + this.salt + " Latitud: " + this.latitud + " Longitud: " + this.longitud);
 	}
 	
-	
+
 	/**
 	 * Generate a hashed&salted hex-string from a user's pass and salt
 	 * @param pass to use; no length-limit!
