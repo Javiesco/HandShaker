@@ -1,4 +1,6 @@
-<%@ include file="../fragments/header.jspf" %>> 
+<%@page import="com.j2r2a.handshaker.model.Usuario"%>
+<%@page import="com.j2r2a.handshaker.model.Categoria"%>
+<%@ include file="../fragments/header.jspf" %>
 
 <div id="cuerpo" class="container">
 	<c:choose>
@@ -17,15 +19,23 @@
 						<tr>
 							<th>Usuario</th>
 							<th>Valoraci&aacute;on</th>
+							<th>media</th>
 						</tr>
 					</thead>
 					<tbody>
 
 						<c:forEach items="${lista_usuarios}" var="u">
 							<tr>
-					
+							<%
+								int media= 8;
+								
+								%>
 								<td>${u.alias}</td>
-								<td>${u.nombre}</td>
+								<td>${u.valoracion}</td>
+								<td> <div class="progress-bar" role="progressbar" aria-valuenow="<%=media %>"
+							aria-valuemin="0" aria-valuemax="10" style="width: <%=media %>0%;">
+							<%=media %>
+						</div></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -35,6 +45,7 @@
 		
 		</c:otherwise>
 	</c:choose>	
+	
 </div>
 
 <%@ include file="../fragments/footer.jspf" %>	

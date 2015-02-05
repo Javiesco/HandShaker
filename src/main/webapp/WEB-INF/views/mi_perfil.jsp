@@ -269,7 +269,7 @@ function obtenerServicios(serv) {
 						<div class="progress-bar" role="progressbar" aria-valuenow="${media}"
 							aria-valuemin="0" aria-valuemax="10" style="width: ${media}0%;">
 							${media}
-							</div>
+						</div>
 					</div>
 					
 					<div >

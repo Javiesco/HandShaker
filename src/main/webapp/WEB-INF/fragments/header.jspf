@@ -223,11 +223,11 @@
 								<c:when test="${not empty usuario}">
 
 									<li ${elemNavbarActive6}><a
-										href="${prefix}trending_topic/Usuario/${usuario.id}"><strong>Trending Topic Usuarios</strong></a></li>
+										href="${prefix}trendingTopic/Usuario/${usuario.id}"><strong>Trending Topic Usuarios</strong></a></li>
 								</c:when>
 								<c:otherwise>
 
-									<li ${elemNavbarActive6}><a href="${prefix}trending_topic/Usuario/0"><strong>Trending Topic Usuarios
+									<li ${elemNavbarActive6}><a href="${prefix}trendingTopic/Usuario/0"><strong>Trending Topic Usuarios
 											</strong></a></li>
 								</c:otherwise>
 							</c:choose>

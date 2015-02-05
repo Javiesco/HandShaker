@@ -273,7 +273,7 @@ public class HomeController {
 	
 	}
 	
-	@RequestMapping(value = "/trending_topic/Usuario/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/trendingTopic/Usuario/{id}", method = RequestMethod.GET)
 	public String trending_topicHome(HttpServletRequest request,Model model,HttpSession session,
 			@PathVariable("id") long id){
 		System.out.print("algo");
@@ -286,9 +286,13 @@ public class HomeController {
 			model.addAttribute("lista_usuarios",lista_usuarios);
 		
 		}
-			
 		
-		return "trending_topic";
+		
+		model.addAttribute("elemNavbarActive6","class='active'");
+		model.addAttribute("prefix", "../../");
+		
+		
+		return "trendingTopic";
 	}
 	
 	
@@ -299,7 +303,7 @@ public class HomeController {
 	@RequestMapping(value = "/mi_perfil/Usuario/{id}", method = RequestMethod.GET)
 	public String mi_perfilHome(HttpServletRequest request,Model model,HttpSession session,
 			@PathVariable("id") long idUsuarioPulsado){
-								
+			
 		if(idUsuarioPulsado==0){			
 			Usuario u = null;
 		}		
@@ -333,7 +337,7 @@ public class HomeController {
 						session.setAttribute("media", media);
 					}
 					
-				
+					
 	
 					
 				
