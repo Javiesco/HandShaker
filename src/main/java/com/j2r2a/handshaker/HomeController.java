@@ -283,7 +283,14 @@ public class HomeController {
 		else{
 		
 			List<Usuario> lista_usuarios = entityManager.createNamedQuery("ListaUsuarios").getResultList();
+			for(int i=0; i< lista_usuarios.size();i++){
+				if(lista_usuarios.get(i).getValoracion()==null){
+					lista_usuarios.get(i).setValoracion(new ArrayList<Integer>());
+				}
+			}
 			model.addAttribute("lista_usuarios",lista_usuarios);
+			request.setAttribute("lista_usuarios2", lista_usuarios);
+	
 		
 		}
 		

@@ -1,5 +1,6 @@
 <%@page import="com.j2r2a.handshaker.model.Usuario"%>
 <%@page import="com.j2r2a.handshaker.model.Categoria"%>
+<%@ page import='java.util.*' %>
 <%@ include file="../fragments/header.jspf" %>
 
 <div id="cuerpo" class="container">
@@ -18,25 +19,41 @@
 					<thead>
 						<tr>
 							<th>Usuario</th>
-							<th>Valoraci&aacute;on</th>
-							<th>media</th>
+							<th>Valoraci&oacute;n media</th>
+						
 						</tr>
 					</thead>
 					<tbody>
-
+						<%int contador =0; %>
 						<c:forEach items="${lista_usuarios}" var="u">
+							
 							<tr>
-							<%
-								int media= 8;
 								
+								<%
+									ArrayList<Usuario> u2 = new ArrayList<Usuario>();
+									u2= (ArrayList<Usuario>)request.getAttribute("lista_usuarios2");
+									int media =0;
+									int fin = u2.get(contador).getValoracion().size();
+									for(int i=0; i < fin; i++){
+										media= media+ u2.get(contador).getValoracion().get(i);
+										
+									}
+									if(fin!=0){
+										media= media / u2.get(contador).getValoracion().size();
+									}
 								%>
-								<td>${u.alias}</td>
-								<td>${u.valoracion}</td>
-								<td> <div class="progress-bar" role="progressbar" aria-valuenow="<%=media %>"
-							aria-valuemin="0" aria-valuemax="10" style="width: <%=media %>0%;">
-							<%=media %>
-						</div></td>
+								
+									<td>${u.alias}</td>					
+									<td> <div class="progress-bar" role="progressbar" aria-valuenow="<%=media %>"
+										aria-valuemin="0" aria-valuemax="10" style="width: <%=media %>0%;">
+										<%=media %>
+								
+										</div>
+									</td>
+									<%contador = contador+1; %>
+							
 							</tr>
+							
 						</c:forEach>
 					</tbody>
 				
